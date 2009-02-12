@@ -1,6 +1,7 @@
 " vim_movement.vim: Movement over VIM functions with ]m etc. 
 "
 " DEPENDENCIES:
+"   - custommotion.vim autoload script. 
 "
 " Copyright: (C) 2009 by Ingo Karkat
 "   The VIM LICENSE applies to this script; see ':help copyright'. 
@@ -9,20 +10,17 @@
 "
 " REVISION	DATE		REMARKS 
 "	001	12-Feb-2009	file creation
+"				Extracted mapping scheme into general helper
+"				function. 
 
-" Move around functions.
-"
+"			Move around VIM functions: 
+"]m			Go to [count] next start of a function. 
+"]M			Go to [count] next end of a function. 
+"[m			Go to [count] previous start of a function. 
+"[M			Go to [count] previous end of a function. 
+
 " This is duplicated from $VIMRUNTIME/ftplugin/vim.vim, using the (IMHO) correct
 " mappings "move to method", not "move to paragraph". 
-" It also enhances the original mappings so that a [count] can be specified, and
-" folds at the found search position are opened. 
-nnoremap <silent> <buffer> [m :<C-U>call custommotion#CountSearch('n', '^\s*fu\%[nction]\>', "bW")<CR>
-vnoremap <silent> <buffer> [m :<C-U>call custommotion#CountSearch('v', '^\s*fu\%[nction]\>', "bW")<CR>
-nnoremap <silent> <buffer> ]m :<C-U>call custommotion#CountSearch('n', '^\s*fu\%[nction]\>', "W")<CR>
-vnoremap <silent> <buffer> ]m :<C-U>call custommotion#CountSearch('v', '^\s*fu\%[nction]\>', "W")<CR>
-nnoremap <silent> <buffer> [M :<C-U>call custommotion#CountSearch('n', '^\s*endf*\%[unction]\>', "bW")<CR>
-vnoremap <silent> <buffer> [M :<C-U>call custommotion#CountSearch('v', '^\s*endf*\%[unction]\>', "bW")<CR>
-nnoremap <silent> <buffer> ]M :<C-U>call custommotion#CountSearch('n', '^\s*endf*\%[unction]\>', "W")<CR>
-vnoremap <silent> <buffer> ]M :<C-U>call custommotion#CountSearch('v', '^\s*endf*\%[unction]\>', "W")<CR>
+call custommotion#MakeBracketMotionWithCountSearch('<buffer>', 'm', 'M', '^\s*fu\%[nction]\>', '^\s*endf*\%[unction]\>')
 
 " vim: set sts=4 sw=4 noexpandtab ff=unix fdm=syntax :
