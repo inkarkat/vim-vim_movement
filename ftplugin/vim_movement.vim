@@ -21,6 +21,9 @@
 
 " This is duplicated from $VIMRUNTIME/ftplugin/vim.vim, using the (IMHO) correct
 " mappings "move to method", not "move to paragraph". 
-call custommotion#MakeBracketMotionWithCountSearch('<buffer>', 'm', 'M', '^\s*fu\%[nction]\>', '^\s*endf*\%[unction]\>', 0)
+let s:patternFunctionBegin = '^\s*fu\%[nction]\>'
+let s:patternFunctionEnd = '^\s*endf*\%[unction]\>'
+call custommotion#MakeBracketMotionWithCountSearch('<buffer>', 'm', 'M', s:patternFunctionBegin, s:patternFunctionEnd, 0)
+call custommotion#MakeTextObjectWithCountSearch('<buffer>', 'm', 'ai', 'V', s:patternFunctionBegin, s:patternFunctionEnd)
 
 " vim: set sts=4 sw=4 noexpandtab ff=unix fdm=syntax :
